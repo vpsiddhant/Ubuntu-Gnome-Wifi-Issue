@@ -1,0 +1,59 @@
+if the Wfi driver for Ubuntu 14.04 LTS Gnome stops working suddenly do the following steps:
+
+sudo apt-get update
+sudo apt-get install bcmwl-kernel-source
+
+sudo apt-get install bcmwl-kernel-source
+(It still wont work because it will show this line)
+
+Loading new bcmwl-6.30.223.248+bdcom DKMS files...
+Building for 3.13.0-132-generic and 3.19.0-80-generic
+Building for architecture x86_64
+Module build for the currently running kernel was skipped since the
+kernel source for this kernel does not seem to be installed.
+Building initial module for 3.19.0-80-generic
+Done.
+
+wl:
+Running module version sanity check.
+ - Original module
+   - No original module exists within this kernel
+ - Installation
+   - Installing to /lib/modules/3.19.0-80-generic/updates/dkms/
+
+depmod....
+
+DKMS: install completed.
+modprobe: FATAL: Module wl not found.
+update-initramfs: deferring update (trigger activated)
+Processing triggers for initramfs-tools (0.103ubuntu4.7) ...
+update-initramfs: Generating /boot/initrd.img-3.19.0-80-generic
+vpsiddhant@z510:~$ sudo apt-get install linux-headers-3.13.0-132-generic
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  linux-headers-3.13.0-132
+The following NEW packages will be installed:
+  linux-headers-3.13.0-132 linux-headers-3.13.0-132-generic
+
+****
+Pays attention to "Loading new bcmwl-6.30.223.248+bdcom DKMS files...
+Building for 3.13.0-132-generic and 3.19.0-80-generic
+Building for architecture x86_64
+Module build for the currently running kernel was skipped since the
+kernel source for this kernel does not seem to be installed.
+
+Building initial module for 3.19.0-80-generic"
+
+
+
+Thgis means it is skipping 3.13.0-132-generic and building only for 3.19.0-80-generic
+
+So now run this
+
+sudo apt-get install linux-headers-3.13.0-132-generic
+sudo apt-get remove bcmwl-kernel-source
+sudo apt-get install bcmwl-kernel-source
+
+It should work
